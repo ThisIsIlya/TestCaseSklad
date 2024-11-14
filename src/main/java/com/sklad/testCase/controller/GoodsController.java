@@ -3,11 +3,13 @@ package com.sklad.testCase.controller;
 import com.sklad.testCase.entity.Goods;
 import com.sklad.testCase.service.GoodsServiceInterface;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/goods")
@@ -15,6 +17,7 @@ public class GoodsController implements GoodsControllerInterface{
 
     private final GoodsServiceInterface goodsService;
 
+    @Autowired
     public GoodsController(GoodsServiceInterface goodsService) {
         this.goodsService = goodsService;
     }
@@ -27,7 +30,7 @@ public class GoodsController implements GoodsControllerInterface{
 
     @Override
     @GetMapping("/{id}")
-    public Goods getGoodsById(@PathVariable Long id) {
+    public Optional<Goods> getGoodsById(@PathVariable Long id) {
         return goodsService.getGoodsById(id);
     }
 

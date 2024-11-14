@@ -4,12 +4,13 @@ import com.sklad.testCase.entity.Goods;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GoodsControllerInterface {
 
     List<Goods> getAllGoods();
 
-    Goods getGoodsById(Long id);
+    Optional<Goods> getGoodsById(Long id);
 
     ResponseEntity<Goods> createGoods(Goods goods);
 
