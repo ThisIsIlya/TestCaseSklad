@@ -53,4 +53,17 @@ public class GoodsController implements GoodsControllerInterface{
         goodsService.deleteGoods(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/filter")
+    public List<Goods> filterGoods(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Boolean inStock,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String order,
+            @RequestParam(required = false) Integer limit
+    ) {
+        return goodsService.filterGoods(name, minPrice, maxPrice, inStock, sortBy, order, limit);
+    }
 }

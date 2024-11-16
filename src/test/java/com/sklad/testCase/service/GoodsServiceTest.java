@@ -6,9 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -96,5 +98,40 @@ class GoodsServiceTest {
         goodsService.deleteGoods(1L);
 
         verify(goodsRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testFilterGoodsByName() {
+        Goods g1 = new Goods(1L, "Apple", "Fresh apple", 1.0, true);
+        Goods g2 = new Goods(2L, "Banana", "Yellow banana", 1.2, true);
+
+        Mockito.when(goodsRepository.findAll()).thenReturn(Arrays.asList(g1, g2));
+
+        List<Goods> result = goodsService.filterGoods("apple", null, null, null, "name", "asc", 10);
+        assertEquals(1, result.size());
+        assertEquals("Apple", result.get(0).getName());
+    }
+
+    @Test
+    void testSortGoodsByPriceDesc() {
+        Goods g1 = new Goods(1L, "Apple", "Fresh apple", 1.0, true);
+        Goods g2 = new Goods(2L, "Banana", "Yellow banana", 2.0, true);
+
+        Mockito.when(goodsRepository.findAll()).thenReturn(Arrays.asList(g1, g2));
+
+        List<Goods> result = goodsService.filterGoods(null, null, null, null, "price", "desc", 10);
+        assertEquals(2, result.size());
+        assertEquals("Banana", result.get(0).getName());
+    }
+
+    @Test
+    void testLimitResults() {
+        Goods g1 = new Goods(1L, "Apple", "Fresh apple", 1.0, true);
+        Goods g2 = new Goods(2L, "Banana", "Yellow banana", 1.2, true);
+
+        Mockito.when(goodsRepository.findAll()).thenReturn(Arrays.asList(g1, g2));
+
+        List<Goods> result = goodsService.filterGoods(null, null, null, null, "name", "asc", 1);
+        assertEquals(1, result.size());
     }
 }

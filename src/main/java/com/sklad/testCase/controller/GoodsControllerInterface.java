@@ -17,4 +17,14 @@ public interface GoodsControllerInterface {
     Goods updateGoods(Long id, Goods goods);
 
     ResponseEntity<Void> deleteGoods(Long id);
+
+    List<Goods> filterGoods(
+            String name,
+            Double minPrice,
+            Double maxPrice,
+            Boolean inStock,
+            String sortBy,
+            String order,
+            Integer limit
+    );
 }

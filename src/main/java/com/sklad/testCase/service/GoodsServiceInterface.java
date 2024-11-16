@@ -17,4 +17,7 @@ public interface GoodsServiceInterface {
 
     void deleteGoods(Long id);
 
+    List<Goods> filterGoods(String name, Double minPrice, Double maxPrice,
+                            Boolean inStock, String sortBy, String order, Integer limit);
+
 }
